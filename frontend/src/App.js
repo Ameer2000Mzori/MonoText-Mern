@@ -1,13 +1,16 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Home from './components/pages/Home'
+import About from './components/pages/About'
+
 function App() {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">This is develop</h1>
-      <h1 className="text-3xl font-bold underline">This is develop</h1>
-      <FontAwesomeIcon icon={faCoffee} />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </Router>
   )
 }
 
