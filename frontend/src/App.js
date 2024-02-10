@@ -6,6 +6,8 @@ function App() {
     <>
       <h1 className="text-3xl font-bold underline">This is develop</h1>
       <h1 className="text-3xl font-bold underline">This is develop</h1>
+      <h1 className="text-3xl font-bold underline">This is develop</h1>
+      <h1 className="text-3xl font-bold underline">This is develop</h1>
       <FontAwesomeIcon icon={faCoffee} />
     </>
   )
