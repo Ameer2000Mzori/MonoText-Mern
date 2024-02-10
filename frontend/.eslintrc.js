@@ -16,5 +16,6 @@ module.exports = {
     'react/jsx-one-expression-per-line': 'off',
     'react/function-component-definition': 'off',
     'arrow-body-style': 'off', // Disable arrow-body-style rule
+    'react/prop-types': 'off',
   },
 }
