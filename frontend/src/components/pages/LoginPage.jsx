@@ -11,7 +11,7 @@ export default function LoginPage() {
 
   return (
     <div className="w-[100vw] h-[100vh] flex flex-col justify-center text-center items-center bg-zinc-600">
-      <div className="grid grid-row-6 gap-2 w-[500px] h-[300px] bg-zinc-500 p-4 text-start rounded-md text-white">
+      <div className="grid grid-row-6 gap-2 sm:w-[500px] w-[360px]  h-[300px] bg-zinc-500 p-4 text-start rounded-md text-white">
         <div>email</div>
         <input
           className="h-[30px] text-black"
