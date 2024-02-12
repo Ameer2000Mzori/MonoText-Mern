@@ -55,6 +55,8 @@ export const getUsers = (req, res) => {
 // create user acc
 export const createAccount = (req, res) => {
   console.log('create article')
+  console.log(req)
+  console.log(req.body)
   const { username, email, password } = req.body
 
   const newAccount = new User({

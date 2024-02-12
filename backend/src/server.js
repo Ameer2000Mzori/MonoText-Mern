@@ -4,6 +4,7 @@ import 'dotenv/config'
 import mongoConnect from './db/db.js'
 
 const app = express()
+app.use(express.json())
 app.use(router)
 
 const PORT = process.env.PORT || 4000
