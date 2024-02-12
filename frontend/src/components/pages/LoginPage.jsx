@@ -24,8 +24,9 @@ export default function LoginPage() {
           onChange={(e) => setUserEmail(e.target.value)}
         />
         <button type="button">submit</button>
-        <p className="">
-          <b>New here?</b> Sign up now to get started!
+        <p className="text-[0.9rem]">
+          <b className=" underline text-blue-800"> New here? </b> Sign up now to
+          get started!
         </p>
       </div>
     </div>
