@@ -2,7 +2,8 @@ import mongoose, { Schema } from 'mongoose'
 
 const newSchema = new Schema({
   author: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
   title: {
