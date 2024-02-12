@@ -1,8 +1,9 @@
 import express from 'express'
+import { homePage, addArticle } from '../controllers/controller.js'
 
 const router = express.Router()
-router.get('/', (req, res) => {
-  res.send('this message is from backend')
-})
+
+router.get('/', homePage)
+router.get('/article', addArticle)
 
 export default router
