@@ -22,20 +22,33 @@ export const getArticle = (req, res) => {
 export const createArticle = async (req, res) => {
   const { author, title, text } = req.body
 
-  const user = User.findById(author)
-
-  const newArticle = new Article({
-    author,
-    title,
-    text,
-  })
   try {
+    // Find the user by ID
+    const user = await User.findById(author)
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' })
+    }
+
+    // Create a new article
+    const newArticle = new Article({
+      author,
+      title,
+      text,
+    })
+
+    // Save the new article
     await newArticle.save()
+
+    // Push the newly created article to the user's articles array
     user.articles.push(newArticle)
+
+    // Save the updated user
     await user.save()
+
     res.status(200).json({
-      message: 'user created successfully',
-      Article: result,
+      message: 'Article created successfully',
+      article: newArticle,
     })
   } catch (err) {
     console.log(err)
