@@ -10,8 +10,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="w-[100vw] h-[100vh] flex flex-col justify-center text-center items-center">
-      <div className="grid grid-row-6 gap-2 w-[500px] h-[300px] bg-slate-500 p-4 text-start rounded-md text-white">
+    <div className="w-[100vw] h-[100vh] flex flex-col justify-center text-center items-center bg-zinc-600">
+      <div className="grid grid-row-6 gap-2 w-[500px] h-[300px] bg-zinc-500 p-4 text-start rounded-md text-white">
         <div>email</div>
         <input
           className="h-[30px] text-black"
@@ -28,7 +28,11 @@ export default function LoginPage() {
           value={userEmail}
           onChange={(e) => setUserEmail(e.target.value)}
         />
-        <button type="button" onClick={loginComfirm}>
+        <button
+          className="bg-sky-900 hover:bg-sky-800 active:bg-sky-700"
+          type="button"
+          onClick={loginComfirm}
+        >
           submit
         </button>
         <p className="text-[0.9rem]">
