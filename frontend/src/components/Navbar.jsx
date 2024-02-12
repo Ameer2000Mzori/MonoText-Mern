@@ -8,14 +8,16 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsOpen((prv) => !prv)
   }
-  const ROUTES = [{ title: 'About', path: '/about' }]
+  const ROUTES = [
+    { title: 'Home', path: '/home' },
+    { title: 'About', path: '/about' },
+  ]
   return (
     <>
       <nav className="bg-primary fixed w-[100%] top-0">
         <div className="container mx-auto px-4 py-2 flex items-center justify-between">
-          <Link to="/">
-            <h1 className="text-2xl font-bold text-white">My App</h1>
-          </Link>
+          <h1 className="text-2xl font-bold text-white">My App</h1>
+
           <ul className="hidden lg:flex space-x-4 list-none text-white">
             {ROUTES.map((route) => (
               <li key={route.path}>

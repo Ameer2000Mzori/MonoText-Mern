@@ -4,12 +4,15 @@ import Home from './components/pages/Home'
 import About from './components/pages/About'
 import Navbar from './components/Navbar'
 import LoginPage from './components/pages/LoginPage'
+import NotFound from './components/pages/NotFound'
+
 
 function App() {
   return (
     <Router>
       <Navbar />
       <Routes>
+        <Route path="*" element={<NotFound />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<LoginPage />} />
