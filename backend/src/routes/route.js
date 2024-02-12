@@ -1,9 +1,21 @@
 import express from 'express'
-import { homePage, addArticle } from '../controllers/controller.js'
+import {
+  homePage,
+  getArticle,
+  createArticle,
+  createAccount,
+  getUsers,
+} from '../controllers/controller.js'
 
 const router = express.Router()
 
+//  articles routes
 router.get('/', homePage)
-router.get('/article', addArticle)
+router.get('/article', getArticle)
+router.post('/article', createArticle)
+
+// users routes
+router.get('/user', getUsers)
+router.post('/user', createAccount)
 
 export default router
