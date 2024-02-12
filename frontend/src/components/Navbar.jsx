@@ -14,7 +14,7 @@ const Navbar = () => {
   ]
   return (
     <>
-      <nav className="bg-primary">
+      <nav className="bg-primary fixed w-[100%] top-0">
         <div className="container mx-auto px-4 py-2 flex items-center justify-between">
           <h1 className="text-2xl font-bold text-white">My App</h1>
 
