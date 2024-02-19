@@ -1,5 +1,9 @@
 import { Article } from '../modules/article.js'
 import { User } from '../modules/users.js'
+import { hashPassword, checkPwd } from '../utils/hashing.js'
+import jwt from 'jsonwebtoken'
+import 'dotenv/config'
+
 export const homePage = (req, res) => {
   res.send('this message is from backend')
 }
@@ -20,19 +24,16 @@ export const getArticle = (req, res) => {
 // create article
 
 export const createArticle = async (req, res) => {
-  const { author, title, text } = req.body
+  const { title, text } = req.body
+  console.log(req.user)
 
   try {
     // Find the user by ID
-    const user = await User.findById(author)
-
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' })
-    }
+    const user = await User.findById(req.user.id)
 
     // Create a new article
     const newArticle = new Article({
-      author,
+      author: user.id,
       title,
       text,
     })
@@ -76,22 +77,53 @@ export const getUsers = (req, res) => {
 }
 
 // create user acc
-export const createAccount = (req, res) => {
+export const createAccount = async (req, res) => {
   const { username, email, password } = req.body
-
-  const newAccount = new User({
-    username,
-    email,
-    password,
-  })
-
-  newAccount
-    .save()
-    .then((result) => {
-      res.status(200).json({
-        message: 'user created successfully',
-        User: result,
-      })
+  let newAccount
+  console.log(req.headers.authorization.split(' ')[1])
+  try {
+    const user = await User.findOne({
+      $or: [{ username }, { email }],
     })
-    .catch((err) => console.log(err))
+    if (user)
+      return res.status(400).json({
+        message: 'user already exist',
+      })
+    let new_pwd = await hashPassword(password)
+    newAccount = new User({
+      username,
+      email,
+      password: new_pwd,
+    })
+    await newAccount.save()
+    console.log(newAccount)
+    const token = jwt.sign({ id: newAccount._id }, process.env.SECRET, {
+      expiresIn: 3600,
+    }) // 1 hour
+    res.status(200).json({
+      message: 'user created successfully',
+      User: newAccount,
+      token,
+    })
+  } catch {
+    if (newAccount?._id) await newAccount.deleteOne({ _id: newAccount._id })
+    res.status(500).json({
+      message: 'Server failed',
+    })
+  }
+}
+
+// login
+export const login = async (req, res) => {
+  const { email, password } = req.body
+  const user = await User.findOne({ email })
+  console.log(user)
+  if (user == null || !(await checkPwd(password, user.password)))
+    return res.status(400).json({ message: 'Username or Password is wrong ' })
+  const token = jwt.sign({ id: user._id }, process.env.SECRET, {
+    expiresIn: 3600,
+  })
+  return res
+    .status(200)
+    .json({ message: 'logged in successfully ', data: user, token })
 }
