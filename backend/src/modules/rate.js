@@ -17,6 +17,7 @@ const newSchema = new Schema({
     default: 0,
   },
 })
+newSchema.index({ user: 1, article: 1 }, { unique: true })
 
 const Rate = mongoose.model('Rate', newSchema)
 

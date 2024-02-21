@@ -7,6 +7,7 @@ import {
   login,
   getUsers,
   rateArticle,
+  deleteArticle,
 } from '../controllers/controller.js'
 import { guard } from '../middlewares/token.js'
 
@@ -16,6 +17,7 @@ const router = express.Router()
 router.get('/', homePage)
 router.get('/article', getArticle)
 router.post('/article', guard, createArticle)
+router.delete('/article/delete', guard, deleteArticle)
 router.post('/rate', guard, rateArticle)
 
 // users routes

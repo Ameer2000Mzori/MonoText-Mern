@@ -88,6 +88,26 @@ export const rateArticle = async (req, res) => {
   }
 }
 
+// delete article
+export const deleteArticle = async (req, res) => {
+  const { article_id } = req.body
+
+  try {
+    const article = await Article.findById(article_id)
+    console.log(article.author)
+    console.log(req.user.id)
+
+    if (article.author.toString() === req.user.id) {
+      await Article.findOneAndDelete({ _id: article_id })
+    } else {
+      res.status(404).json({ error: 'you are not allowed to delete' })
+    }
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ error: 'An error occurred' })
+  }
+}
+
 // =======================================================================================
 //  user  list users acc
 

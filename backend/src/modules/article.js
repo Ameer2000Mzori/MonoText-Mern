@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
+import { Rate } from './rate.js'
 
 const newSchema = new Schema({
   author: {
@@ -22,6 +23,13 @@ const newSchema = new Schema({
       default: 0,
     },
   ],
+})
+
+// Use post hook for the delete operation
+newSchema.post('findOneAndDelete', async function (doc) {
+  if (doc) {
+    await Rate.deleteMany({ article: doc._id })
+  }
 })
 
 const Article = mongoose.model('Article', newSchema)
