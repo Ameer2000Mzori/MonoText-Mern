@@ -1,5 +1,6 @@
 import { Article } from '../modules/article.js'
 import { User } from '../modules/users.js'
+import { Rate } from '../modules/rate.js'
 import { hashPassword, checkPwd } from '../utils/hashing.js'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
@@ -63,7 +64,7 @@ export const rateArticle = async (req, res) => {
   try {
     const article = await Article.findById(article_id)
 
-    const newRate = new Article({
+    const newRate = new Rate({
       user: req.user.id,
       article: article.id,
       value,
@@ -79,7 +80,7 @@ export const rateArticle = async (req, res) => {
 
     res.status(200).json({
       message: 'rate created successfully',
-      article: newRate,
+      rate: newRate,
     })
   } catch (err) {
     console.log(err)
@@ -110,7 +111,7 @@ export const getUsers = (req, res) => {
 export const createAccount = async (req, res) => {
   const { username, email, password } = req.body
   let newAccount
-  console.log(req.headers.authorization.split(' ')[1])
+  // console.log(req.headers.authorization.split(' ')[1])
   try {
     const user = await User.findOne({
       $or: [{ username }, { email }],

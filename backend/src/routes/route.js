@@ -19,7 +19,7 @@ router.post('/article', guard, createArticle)
 router.post('/rate', guard, rateArticle)
 
 // users routes
-router.get('/user', guard, getUsers)
+router.get('/user', getUsers)
 router.post('/user', createAccount)
 router.post('/login', login)
 
