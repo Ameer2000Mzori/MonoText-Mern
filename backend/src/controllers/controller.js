@@ -63,25 +63,38 @@ export const rateArticle = async (req, res) => {
   const { value, article_id } = req.body
   try {
     const article = await Article.findById(article_id)
+    const rate = await Rate.findOne({ article: article_id, user: req.user.id })
+    if (rate) {
+      if (rate.value === value) {
+        rate.value = 0
+      } else {
+        rate.value = value
+      }
+      await rate.save()
+      res.status(200).json({
+        message: 'rate updated successfully',
+        rate: rate,
+      })
+    } else {
+      const newRate = new Rate({
+        user: req.user.id,
+        article: article.id,
+        value,
+      })
 
-    const newRate = new Rate({
-      user: req.user.id,
-      article: article.id,
-      value,
-    })
+      await newRate.save()
 
-    await newRate.save()
+      // Push the newly created rate to the article
+      article.rates.push(newRate)
 
-    // Push the newly created rate to the article
-    article.rates.push(newRate)
+      // Save the updated article
+      await article.save()
 
-    // Save the updated article
-    await article.save()
-
-    res.status(200).json({
-      message: 'rate created successfully',
-      rate: newRate,
-    })
+      res.status(200).json({
+        message: 'rate created successfully',
+        rate: newRate,
+      })
+    }
   } catch (err) {
     console.log(err)
     res.status(500).json({ error: 'An error occurred' })
