@@ -110,10 +110,13 @@ export const updateArticle = async (req, res) => {
     const article = await Article.findById(article_id)
 
     if (article.author.toString() === req.user.id) {
-      article.updateOne({
-        text: text ?? article.text,
+      const updateData = {
         title: title ?? article.title,
-      })
+        text: text ?? article.text,
+      }
+      await Article.updateOne({ _id: article_id }, updateData)
+
+      await article.save()
       res.status(401).json({
         message: 'Article updated successfully',
         article: article,
