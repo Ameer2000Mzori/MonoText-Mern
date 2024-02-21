@@ -14,11 +14,14 @@ const newSchema = new Schema({
     type: String,
     required: true,
   },
-  rate: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
+  rates: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Rate',
+      required: true,
+      default: 0,
+    },
+  ],
 })
 
 const Article = mongoose.model('Article', newSchema)
