@@ -13,6 +13,7 @@ export const homePage = (req, res) => {
 export const getArticle = (req, res) => {
   Article.find()
     .populate('author')
+    .populate('rates')
     .sort({
       createdAt: -1,
     })
@@ -94,6 +95,33 @@ export const rateArticle = async (req, res) => {
         message: 'rate created successfully',
         rate: newRate,
       })
+    }
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ error: 'An error occurred' })
+  }
+}
+
+//  article update
+export const updateArticle = async (req, res) => {
+  const { text, title, article_id } = req.body
+
+  try {
+    const article = await Article.findById(article_id)
+
+    if (article.author.toString() === req.user.id) {
+      article.updateOne({
+        text: text ?? article.text,
+        title: title ?? article.title,
+      })
+      res.status(401).json({
+        message: 'Article updated successfully',
+        article: article,
+      })
+    } else {
+      res
+        .status(500)
+        .json({ error: 'you are not allowed to update this article' })
     }
   } catch (err) {
     console.log(err)
