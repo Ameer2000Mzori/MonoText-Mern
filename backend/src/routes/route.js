@@ -9,6 +9,7 @@ import {
   rateArticle,
   deleteArticle,
   updateArticle,
+  delAccount,
 } from '../controllers/controller.js'
 import { guard } from '../middlewares/token.js'
 
@@ -25,6 +26,7 @@ router.post('/rate', guard, rateArticle)
 // users routes
 router.get('/user', getUsers)
 router.post('/user', createAccount)
+router.delete('/user/', guard, delAccount)
 router.post('/login', login)
 
 export default router

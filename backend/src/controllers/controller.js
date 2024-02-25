@@ -208,6 +208,22 @@ export const createAccount = async (req, res) => {
   }
 }
 
+// del user acc
+export const delAccount = async (req, res) => {
+  try {
+    const { password } = req.body
+    const user = await User.findById(req.user.id)
+    if (!user || !(await checkPwd(password, user.password)))
+      return res.status(400).json({ message: 'Password is wrong' })
+    await User.findOneAndDelete({ _id: req.user.id })
+    return res.status(200).json({ message: 'Account deleted successfully' })
+  } catch {
+    res.status(500).json({
+      message: 'Server failed',
+    })
+  }
+}
+
 // login
 export const login = async (req, res) => {
   const { email, password } = req.body

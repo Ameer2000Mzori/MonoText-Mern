@@ -9,8 +9,6 @@ export const guard = (req, res, next) => {
     }
     const token = authHeader.split(' ')[1]
     const decoded = jwt.verify(token, process.env.SECRET)
-    console.log(authHeader)
-
     req.user = decoded
     next()
   } catch (err) {
