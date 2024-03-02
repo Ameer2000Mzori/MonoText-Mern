@@ -9,7 +9,10 @@ const AccountsLinks = () => {
   return (
     <ul className="flex flex-col gap-4">
       {pages.map((page) => (
-        <li className="w-[150px] h-[40px] bg-zinc-500" key={page.path}>
+        <li
+          className="w-[150px] h-[40px] bg-zinc-500 hover:bg-zinc-600 active:bg-zinc-300"
+          key={page.path}
+        >
           <Link
             className="h-[100%] w-[100%] text-white flex flex-col text-center items-center justify-center"
             to={page.path}
