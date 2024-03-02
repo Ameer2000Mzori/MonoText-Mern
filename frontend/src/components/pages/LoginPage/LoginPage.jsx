@@ -15,15 +15,15 @@ export default function LoginPage() {
       <div className="grid grid-row-6 gap-2 sm:w-[500px] w-[360px]  h-[300px] bg-zinc-500 p-4 text-start rounded-md text-white">
         <div>email</div>
         <input
-          className="h-[30px] text-black"
+          className="h-[30px] text-black pl-2"
           type="text"
-          placeholder="username / email"
+          placeholder="email"
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
         />
         <div>passowrd</div>
         <input
-          className="h-[30px] text-black"
+          className="h-[30px] text-black pl-2"
           type="text"
           placeholder="password"
           value={userEmail}
