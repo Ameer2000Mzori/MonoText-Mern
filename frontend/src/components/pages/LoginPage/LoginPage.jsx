@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function LoginPage() {
   const [userName, setUserName] = useState('')
@@ -36,7 +37,11 @@ export default function LoginPage() {
           submit
         </button>
         <p className="text-[0.9rem]">
-          <b className=" underline text-blue-800"> New here? </b> Sign up now to
+          <b> New here? </b>
+          <Link className=" underline text-sky-500" to="/signup">
+            {' '}
+            Sign up now to{' '}
+          </Link>
           get started!
         </p>
       </div>
