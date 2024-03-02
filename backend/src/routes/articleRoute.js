@@ -6,7 +6,7 @@ import {
   rateArticle,
   deleteArticle,
   updateArticle,
-} from '../controllers/controller.js'
+} from '../controllers/articleController.js'
 import { guard } from '../middlewares/token.js'
 
 const router = express.Router()
