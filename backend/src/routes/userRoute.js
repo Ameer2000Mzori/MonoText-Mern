@@ -4,7 +4,7 @@ import {
   login,
   getUsers,
   delAccount,
-} from '../controllers/controller.js'
+} from '../controllers/userController.js'
 import { guard } from '../middlewares/token.js'
 const router = express.Router()
 
