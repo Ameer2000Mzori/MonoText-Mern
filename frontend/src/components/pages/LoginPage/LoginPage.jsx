@@ -1,13 +1,31 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export default function LoginPage() {
-  const [userName, setUserName] = useState('')
+  const queryClient = useQueryClient()
+
   const [userEmail, setUserEmail] = useState('')
+  const [userPassword, setUserPassword] = useState('')
+
+  const { mutate: login, isLoading } = useMutation({
+    mutationFn: (userEmail, userPassword) =>
+      axios.post('http://localhost:4000/user', {
+        password: userPassword,
+        email: userEmail,
+      }),
+    onSuccess: () => {
+      toast.success('logged in successfully')
+      setUserEmail('')
+      setUserPassword('')
+    },
+    onError: (error) => {
+      toast.error(error.response.data.msg)
+    },
+  })
 
   const loginComfirm = () => {
-    console.log('user name', userName)
-    console.log('user email', userEmail)
+    login(userEmail, userPassword)
   }
 
   return (
@@ -19,7 +37,7 @@ export default function LoginPage() {
           type="text"
           placeholder="email"
           value={userName}
-          onChange={(e) => setUserName(e.target.value)}
+          onChange={(e) => setUserEmail(e.target.value)}
         />
         <div>passowrd</div>
         <input
@@ -27,7 +45,7 @@ export default function LoginPage() {
           type="text"
           placeholder="password"
           value={userEmail}
-          onChange={(e) => setUserEmail(e.target.value)}
+          onChange={(e) => setUserPassword(e.target.value)}
         />
         <button
           className="bg-sky-900 hover:bg-sky-800 active:bg-sky-700"
