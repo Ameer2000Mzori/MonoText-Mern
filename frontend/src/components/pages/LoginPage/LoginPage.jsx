@@ -1,31 +1,21 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useMutation } from '@tanstack/react-query'
-import axios from 'axios'
-import { toast } from 'react-toastify'
+import { useLogin } from './hooks/LoginLogic.jsx' // Ensure this path matches the location of your LoginLogic custom hook file
 
 export default function LoginPage() {
   const [userEmail, setUserEmail] = useState('')
   const [userPassword, setUserPassword] = useState('')
 
-  // Define the mutation
-  const { mutate: login } = useMutation({
-    mutationFn: ({ email, password }) =>
-      axios.post('/login', { email, password }),
-    onSuccess: () => {
-      toast.success('Logged in successfully')
-      // Here you might also want to redirect the user or set authentication state
-    },
-    onError: (error) => {
-      // It's good to check if error.response exists
-      toast.error(
-        error.response ? error.response.data.msg : 'An error occurred'
-      )
-    },
-  })
+  // Destructure the login function from the useLogin hook
+  const { login, isError, error } = useLogin()
 
-  const loginConfirm = () => {
-    login({ email: userEmail, password: userPassword })
+  // Log errors for debugging purposes
+  console.log('isError', isError)
+  console.log('error', error && error.message)
+
+  // Define the submit handler
+  const handleSubmit = () => {
+    login({ email: userEmail, password: userPassword }) // Call the login function with an object containing email and password
   }
 
   return (
@@ -34,7 +24,7 @@ export default function LoginPage() {
         <div>Email</div>
         <input
           className="h-[30px] text-black pl-2"
-          type="email" // Change type to email for appropriate keyboard and validation
+          type="email"
           placeholder="email"
           value={userEmail}
           onChange={(e) => setUserEmail(e.target.value)}
@@ -42,7 +32,7 @@ export default function LoginPage() {
         <div>Password</div>
         <input
           className="h-[30px] text-black pl-2"
-          type="password" // Change type to password to hide input
+          type="password"
           placeholder="password"
           value={userPassword}
           onChange={(e) => setUserPassword(e.target.value)}
@@ -50,10 +40,15 @@ export default function LoginPage() {
         <button
           className="bg-sky-900 hover:bg-sky-800 active:bg-sky-700"
           type="button"
-          onClick={loginConfirm}
+          onClick={handleSubmit} // Use the handleSubmit function here
         >
           Submit
         </button>
+        {isError && (
+          <p className="text-red-500">
+            Error: {error?.response?.data?.message || 'Login failed'}
+          </p>
+        )}
         <p className="text-[0.9rem]">
           <b>New here?</b>
           <Link className="underline text-sky-500" to="/signup">
