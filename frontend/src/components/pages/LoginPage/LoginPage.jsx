@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useLogin } from './hooks/LoginLogic.jsx' // Ensure this path matches the location of your LoginLogic custom hook file
+import { useLogin } from './hooks/LoginLogic.jsx'
 
 export default function LoginPage() {
   const [userEmail, setUserEmail] = useState('')
@@ -15,7 +15,9 @@ export default function LoginPage() {
 
   // Define the submit handler
   const handleSubmit = () => {
-    login({ email: userEmail, password: userPassword }) // Call the login function with an object containing email and password
+    login({
+      data: { email: userEmail, password: userPassword },
+    })
   }
 
   return (
