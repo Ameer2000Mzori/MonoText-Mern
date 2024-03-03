@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 export default function LoginPage() {
-  const queryClient = useQueryClient()
-
   const [userEmail, setUserEmail] = useState('')
   const [userPassword, setUserPassword] = useState('')
 
@@ -36,7 +36,7 @@ export default function LoginPage() {
           className="h-[30px] text-black pl-2"
           type="text"
           placeholder="email"
-          value={userName}
+          value={userEmail}
           onChange={(e) => setUserEmail(e.target.value)}
         />
         <div>passowrd</div>
@@ -44,7 +44,7 @@ export default function LoginPage() {
           className="h-[30px] text-black pl-2"
           type="text"
           placeholder="password"
-          value={userEmail}
+          value={userPassword}
           onChange={(e) => setUserPassword(e.target.value)}
         />
         <button
