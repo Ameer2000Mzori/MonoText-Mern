@@ -69,7 +69,7 @@ export default function LoginPage() {
             Error: {error?.response?.data?.message || 'Login failed'}
           </p>
         )}
-        <p className="text-[0.9rem] w-[60%] flex flex-row text-start items-center gap-[5px]">
+        <p className=" md:text-[0.9rem] md:w-[60%] w-[90%] flex flex-row text-start items-center gap-[5px]  text-[11px]">
           <b>New here?</b>
           <Link className="underline text-sky-500" to="/signup">
             Sign up now

@@ -12,6 +12,11 @@ export const StyledFormWrap = styled.form`
   gap: 0.5rem;
   color: white;
   background-color: rgb(113 113 122);
+
+  @media (max-width: 768px) {
+    width: 300px;
+    height: 300px;
+  }
 `
 
 export const StyledInputsWrap = styled.div`
@@ -66,5 +71,9 @@ export const StyledButton = styled.button`
 
   &:active {
     background-color: rgb(3 105 161);
+  }
+
+  @media (max-width: 768px) {
+    width: 45%;
   }
 `
