@@ -21,14 +21,10 @@ export default function LoginPage() {
       password: '',
     },
     validationSchema: validationSchema,
-    onSubmit: async (values) => {
-      try {
-        await login({
-          data: values,
-        })
-      } catch (error) {
-        console.error('Login error:', error)
-      }
+    onSubmit: (values) => {
+      login({
+        data: values,
+      })
     },
   })
 
