@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useLogin } from './hooks/LoginLogic.jsx'
 import { useFormik } from 'formik'
+import ErrorMessage from './hooks/ErrorMessage.jsx'
 
 import { validationSchema } from '../../shared/validationSchema.js'
 import {
@@ -43,9 +44,7 @@ export default function LoginPage() {
             onBlur={formik.handleBlur}
           />
           {formik.touched.email && formik.errors.email ? (
-            <p className="red text-red-600 m-0 p-0 h-5px text-[11px] w-[90%] flex flex-col text-start absolute bottom-[-15px] left-5px">
-              {formik.errors.email}
-            </p>
+            <ErrorMessage>{formik.errors.email}</ErrorMessage>
           ) : null}
         </StyledInputsWrap>
         <StyledInputsWrap>
@@ -60,9 +59,7 @@ export default function LoginPage() {
             onBlur={formik.handleBlur}
           />
           {formik.touched.password && formik.errors.password ? (
-            <p className="red text-red-600 m-0 p-0 h-5px text-[11px] w-[90%] flex flex-col text-start absolute bottom-[-15px] left-5px">
-              {formik.errors.password}
-            </p>
+            <ErrorMessage children={formik.errors.password} />
           ) : null}
         </StyledInputsWrap>
 
