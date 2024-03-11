@@ -5,6 +5,7 @@ import {
   StyledFormWrap,
   StyledLabel,
   StyledInput,
+  StyledButton,
 } from './hooks/StyledComponents.jsx'
 
 export default function LoginPage() {
@@ -42,19 +43,15 @@ export default function LoginPage() {
           value={userPassword}
           onChange={(e) => setUserPassword(e.target.value)}
         />
-        <button
-          className="bg-sky-900 hover:bg-sky-800 active:bg-sky-700"
-          type="button"
-          onClick={handleSubmit} // Use the handleSubmit function here
-        >
+        <StyledButton type="button" onClick={handleSubmit}>
           Submit
-        </button>
+        </StyledButton>
         {isError && (
           <p className="text-red-500">
             Error: {error?.response?.data?.message || 'Login failed'}
           </p>
         )}
-        <p className="text-[0.9rem]">
+        <p className="text-[0.9rem] w-[60%] flex flex-row text-start items-center gap-[5px]">
           <b>New here?</b>
           <Link className="underline text-sky-500" to="/signup">
             Sign up now

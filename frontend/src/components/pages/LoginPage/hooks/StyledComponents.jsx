@@ -35,3 +35,23 @@ export const StyledInput = styled.input`
   justify-content: space-evenly;
   text-align: start;
 `
+
+export const StyledButton = styled.button`
+  width: 50%;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgb(12 74 110);
+
+  &:hover {
+    background-color: rgb(7 89 133);
+  }
+
+  &:active {
+    background-color: rgb(3 105 161);
+  }
+`
