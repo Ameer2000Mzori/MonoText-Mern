@@ -31,6 +31,8 @@ export default function LoginPage() {
       <StyledFormWrap>
         <StyledLabel>Email</StyledLabel>
         <StyledInput
+          id="email"
+          htmlFor="email"
           type="email"
           placeholder="email"
           value={userEmail}
@@ -38,6 +40,8 @@ export default function LoginPage() {
         />
         <StyledLabel>Password</StyledLabel>
         <StyledInput
+          id="password"
+          htmlFor="password"
           type="password"
           placeholder="password"
           value={userPassword}
