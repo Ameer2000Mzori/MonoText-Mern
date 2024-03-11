@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const StyledFormWrap = styled.div`
+export const StyledFormWrap = styled.form`
   width: 500px;
   height: 300px;
   display: flex;
@@ -9,9 +9,22 @@ export const StyledFormWrap = styled.div`
   justify-content: center;
   text-align: center;
   border-radius: 15px;
-  gap: 1rem;
+  gap: 0.5rem;
   color: white;
   background-color: rgb(113 113 122);
+`
+
+export const StyledInputsWrap = styled.div`
+  width: 90%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.5rem;
+  color: white;
+  position: relative;
 `
 
 export const StyledLabel = styled.label`
