@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 import Home from './components/pages/Home/Home'
 import About from './components/pages/About'
 import Navbar from './components/Navbar'
-import Signup from './components/pages/Signup'
+import Signup from './components/pages/SignupPage/Signup'
 import LoginPage from './components/pages/LoginPage/LoginPage'
 import NotFound from './components/pages/NotFound'
 

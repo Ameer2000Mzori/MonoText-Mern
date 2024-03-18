@@ -6,8 +6,8 @@ const useFetch = ({ onSuccess, onError, options }) => {
   const token = useSelector((state) => state.user.token)
   const {
     mutate: res,
-    isError,
     error,
+    isPending: isLoading,
   } = useMutation({
     mutationFn: (dataWithParams) =>
       axios.request({
@@ -23,7 +23,7 @@ const useFetch = ({ onSuccess, onError, options }) => {
       }),
   })
 
-  return { res, isError, error }
+  return { res, isLoading, error }
 }
 
 export default useFetch

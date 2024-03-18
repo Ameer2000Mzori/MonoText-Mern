@@ -1,24 +1,30 @@
 import React from 'react'
 
 // eslint-disable-next-line object-curly-newline
-const TextInput = ({ title, input, updateInput, pattern, errMsg, type }) => {
+const TextInput = ({
+  title,
+  name,
+  input,
+  updateInput,
+  errMsg,
+  type,
+  onBlur,
+}) => {
   return (
     <div className="my-3">
       <label htmlFor={title} className="text-md ">
         {title}
       </label>
       <input
-        id={title}
+        id={name}
+        name={name}
         className="w-full border-[1px] text-primary border-primary p-1 rounded"
         value={input}
-        onChange={(e) => updateInput(e.target.value)}
-        pattern={pattern}
+        onChange={updateInput}
         type={type ?? 'text'}
-        required={!!errMsg}
+        onBlur={onBlur}
       />
-      {errMsg && !input.match(pattern) && (
-        <small className="block text-red-900">{errMsg}</small>
-      )}
+      <small className="text-red-300">{errMsg}</small>
     </div>
   )
 }

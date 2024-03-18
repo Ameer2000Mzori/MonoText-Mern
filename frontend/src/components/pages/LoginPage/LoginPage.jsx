@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useLogin } from './hooks/LoginLogic.jsx'
 import { useFormik } from 'formik'
@@ -14,8 +14,10 @@ import {
 } from './hooks/StyledComponents.jsx'
 
 export default function LoginPage() {
-  const { login, isError, error } = useLogin()
-
+  const { login, isLoading, error } = useLogin()
+  useEffect(() => {
+    console.log(isLoading)
+  }, [isLoading])
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -63,8 +65,10 @@ export default function LoginPage() {
           ) : null}
         </StyledInputsWrap>
 
-        <StyledButton type="submit">Submit</StyledButton>
-        {isError && (
+        <StyledButton type="submit">
+          {isLoading ? 'loading...' : 'Submit'}
+        </StyledButton>
+        {error && (
           <p className="text-red-500">
             Error: {error?.response?.data?.message || 'Login failed'}
           </p>
