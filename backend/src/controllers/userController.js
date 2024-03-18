@@ -45,7 +45,7 @@ export const createAccount = async (req, res) => {
     }) // 1 hour
     res.status(200).json({
       message: 'user created successfully',
-      User: newAccount,
+      data: newAccount,
       token,
     })
   } catch {
