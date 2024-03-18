@@ -8,6 +8,20 @@ export const validationSchema = Yup.object().shape({
     .required('Required'),
 })
 
+export const signupValidation = Yup.object().shape({
+  username: Yup.string().min(3, 'Too Short!').required('Username is Required'),
+  email: Yup.string()
+    .email('Invalid email address')
+    .required('Email is Required'),
+  password: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Required'),
+  confirmPassword: Yup.string()
+    .equals([Yup.ref('password')], 'Passwords must match')
+    .required('Password Confirmation is required'),
+})
+
 // export const validationSchema = Yup.object().shape({
 //   firstname: Yup.string()
 //     .min(2, 'Too Short!')
