@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useLogin } from './hooks/LoginLogic.jsx'
 import { useFormik } from 'formik'
 import ErrorMessage from './hooks/ErrorMessage.jsx'
@@ -12,12 +12,18 @@ import {
   StyledButton,
   StyledInputsWrap,
 } from './hooks/StyledComponents.jsx'
+import AuthOperations from '../../../api/AuthOperations.jsx'
+import { useDispatch } from 'react-redux'
+import { signIn } from '../../../features/user/userSlice.js'
 
 export default function LoginPage() {
-  const { login, isLoading, error } = useLogin()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  // const { login, isPending, error } = useLogin()
+  const { mutate, isPending, isSuccess, isError, data } = AuthOperations()
   useEffect(() => {
-    console.log(isLoading)
-  }, [isLoading])
+    console.log(isPending)
+  }, [isPending])
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -25,11 +31,17 @@ export default function LoginPage() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      login({
-        data: values,
-      })
+      console.log(values)
+      mutate([{ url: 'login', email: values.email, password: values.password }])
     },
   })
+
+  if (isSuccess) {
+    console.log(data)
+    console.log('this is data', data)
+    dispatch(signIn({ ...data.data, token: data.token }))
+    setTimeout(() => navigate('/'), 500)
+  }
 
   return (
     <div className="w-[100vw] h-[100vh] flex flex-col justify-center text-center items-center bg-zinc-600">
@@ -66,11 +78,11 @@ export default function LoginPage() {
         </StyledInputsWrap>
 
         <StyledButton type="submit">
-          {isLoading ? 'loading...' : 'Submit'}
+          {isPending ? 'loading...' : 'Submit'}
         </StyledButton>
-        {error && (
+        {isError && (
           <p className="text-red-500">
-            Error: {error?.response?.data?.message || 'Login failed'}
+            Error: {isError?.response?.data?.message || 'Login failed'}
           </p>
         )}
         <p className=" md:text-[0.9rem] md:w-[60%] w-[90%] flex flex-row text-start items-center gap-[5px]  text-[11px]">
