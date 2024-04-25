@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const AuthOperations = () => {
   const { mutate, isPending, isSuccess, isError, data } = useMutation({
-    mutationFn: ([{ method, url, ...arg }]) => {
+    mutationFn: ([{ token, method, url, ...arg }]) => {
       console.log(' info we got ', method, url, arg)
       return axios
         .request({
@@ -13,7 +13,7 @@ const AuthOperations = () => {
             ...arg,
           },
           headers: {
-            // request headers
+            headers: { token: `Bearer  ${token}` },
           },
         })
         .then((result) => result.data)
