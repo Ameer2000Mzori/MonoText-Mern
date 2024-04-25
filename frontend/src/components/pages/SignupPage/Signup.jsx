@@ -1,19 +1,33 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Card from '../../shared/Card'
 import TextInput from '../../shared/TextInput'
 import { Formik } from 'formik'
 import { signupValidation } from '../../shared/validationSchema'
-import { useSignUp } from './hooks/SignupLogic'
+import AuthOperations from '../../../api/AuthOperations'
+import { useDispatch } from 'react-redux'
+import { signIn } from '../../../features/user/userSlice'
+// import { useSignUp } from './hooks/SignupLogic'
 
 export default function Signup() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const initialSignUp = {
     username: '',
     email: '',
     password: '',
     confirmPassword: '',
   }
-  const { signUp, isLoading, error } = useSignUp()
+
+  // const { signUp, isPending, error } = useSignUp()
+  const { mutate, isPending, isSuccess, isError, data } = AuthOperations()
+
+  if (isSuccess) {
+    console.log(data)
+    console.log('this is data', data)
+    dispatch(signIn({ ...data.data, token: data.token }))
+    setTimeout(() => navigate('/'), 500)
+  }
 
   return (
     <div className="min-h-[100vh] flex justify-center items-center text-primary_c bg-zinc-600">
@@ -21,9 +35,17 @@ export default function Signup() {
         <Formik
           initialValues={initialSignUp}
           validationSchema={signupValidation}
-          onSubmit={(data) => {
-            console.log(data)
-            signUp({ data })
+          onSubmit={(userData) => {
+            console.log('this is userData', userData)
+            mutate([
+              {
+                method: 'POST',
+                url: 'user',
+                username: userData.username,
+                email: userData.email,
+                password: userData.password,
+              },
+            ])
           }}
         >
           {({
@@ -78,14 +100,16 @@ export default function Signup() {
                 updateInput={handleChange}
               />
               <button
-                disabled={isLoading}
+                disabled={isPending}
                 type="submit"
                 className="text-center bg-blue-600 text-white w-full rounded p-2"
               >
-                {isLoading ? 'Loading...' : 'Submit'}
+                {isPending ? 'Loading...' : 'Submit'}
               </button>
-              {error && (
-                <small className="text-lg text-red-300">{error.message}</small>
+              {isError && (
+                <small className="text-lg text-red-300">
+                  {isError.message}
+                </small>
               )}
             </form>
           )}

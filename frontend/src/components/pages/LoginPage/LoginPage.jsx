@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useLogin } from './hooks/LoginLogic.jsx'
 import { useFormik } from 'formik'
 import ErrorMessage from './hooks/ErrorMessage.jsx'
-
 import { validationSchema } from '../../shared/validationSchema.js'
+// import { useLogin } from './hooks/LoginLogic.jsx'
+
 import {
   StyledFormWrap,
   StyledLabel,
@@ -32,7 +32,14 @@ export default function LoginPage() {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log(values)
-      mutate([{ url: 'login', email: values.email, password: values.password }])
+      mutate([
+        {
+          method: 'POST',
+          url: 'login',
+          email: values.email,
+          password: values.password,
+        },
+      ])
     },
   })
 

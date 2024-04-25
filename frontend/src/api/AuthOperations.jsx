@@ -3,10 +3,19 @@ import axios from 'axios'
 
 const AuthOperations = () => {
   const { mutate, isPending, isSuccess, isError, data } = useMutation({
-    mutationFn: ([{ url, ...arg }]) => {
-      console.log(' info we got ', url, arg)
+    mutationFn: ([{ method, url, ...arg }]) => {
+      console.log(' info we got ', method, url, arg)
       return axios
-        .post(`/${url}`, { ...arg })
+        .request({
+          url: `/${url}`,
+          method: `${method}`,
+          data: {
+            ...arg,
+          },
+          headers: {
+            // request headers
+          },
+        })
         .then((result) => result.data)
         .catch((error) => {
           console.log(' error we got ', error)
