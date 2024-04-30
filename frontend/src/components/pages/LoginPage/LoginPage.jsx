@@ -20,7 +20,12 @@ export default function LoginPage() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   // const { login, isPending, error } = useLogin()
-  const { mutate, isPending, isSuccess, isError, data } = AuthOperations()
+  const { mutate, isPending, isError } = AuthOperations({
+    onSuccess: (newData) => {
+      dispatch(signIn({ ...newData.data, token: newData.token }))
+      setTimeout(() => navigate('/'), 500)
+    },
+  })
   useEffect(() => {
     console.log(isPending)
   }, [isPending])
@@ -42,13 +47,6 @@ export default function LoginPage() {
       ])
     },
   })
-
-  if (isSuccess) {
-    console.log(data)
-    console.log('this is data', data)
-    dispatch(signIn({ ...data.data, token: data.token }))
-    setTimeout(() => navigate('/'), 500)
-  }
 
   return (
     <div className="w-[100vw] h-[100vh] flex flex-col justify-center text-center items-center bg-zinc-600">

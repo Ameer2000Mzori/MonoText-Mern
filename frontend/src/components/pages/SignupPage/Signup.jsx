@@ -20,14 +20,12 @@ export default function Signup() {
   }
 
   // const { signUp, isPending, error } = useSignUp()
-  const { mutate, isPending, isSuccess, isError, data } = AuthOperations()
-
-  if (isSuccess) {
-    console.log(data)
-    console.log('this is data', data)
-    dispatch(signIn({ ...data.data, token: data.token }))
-    setTimeout(() => navigate('/'), 500)
-  }
+  const { mutate, isPending, isSuccess, isError, data } = AuthOperations({
+    onSuccess: (newData) => {
+      dispatch(signIn({ ...newData.data, token: newData.token }))
+      setTimeout(() => navigate('/'), 500)
+    },
+  })
 
   return (
     <div className="min-h-[100vh] flex justify-center items-center text-primary_c bg-zinc-600">

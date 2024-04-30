@@ -60,7 +60,14 @@ export const createArticle = async (req, res) => {
 
 // here where you can rate an article
 export const rateArticle = async (req, res) => {
-  const { value, article_id } = req.body
+  let { value, article_id } = req.body
+
+  console.log('we got from rate frontend : ', value, article_id)
+
+  if (value >= 0) value = 1
+
+  if (value < 0) value = -1
+
   try {
     // finding the article by id
     const article = await Article.findById(article_id)
