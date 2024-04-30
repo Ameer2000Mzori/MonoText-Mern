@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { useLogin } from './hooks/LoginLogic.jsx'
+import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import ErrorMessage from './hooks/ErrorMessage.jsx'
-
 import { validationSchema } from '../../shared/validationSchema.js'
+// import { useLogin } from './hooks/LoginLogic.jsx'
+
 import {
   StyledFormWrap,
   StyledLabel,
@@ -12,12 +12,23 @@ import {
   StyledButton,
   StyledInputsWrap,
 } from './hooks/StyledComponents.jsx'
+import AuthOperations from '../../../api/AuthOperations.jsx'
+import { useDispatch } from 'react-redux'
+import { signIn } from '../../../features/user/userSlice.js'
 
 export default function LoginPage() {
-  const { login, isLoading, error } = useLogin()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  // const { login, isPending, error } = useLogin()
+  const { mutate, isPending, isError } = AuthOperations({
+    onSuccess: (newData) => {
+      dispatch(signIn({ ...newData.data, token: newData.token }))
+      setTimeout(() => navigate('/'), 500)
+    },
+  })
   useEffect(() => {
-    console.log(isLoading)
-  }, [isLoading])
+    console.log(isPending)
+  }, [isPending])
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -25,9 +36,15 @@ export default function LoginPage() {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      login({
-        data: values,
-      })
+      console.log(values)
+      mutate([
+        {
+          method: 'POST',
+          url: 'login',
+          email: values.email,
+          password: values.password,
+        },
+      ])
     },
   })
 
@@ -66,11 +83,11 @@ export default function LoginPage() {
         </StyledInputsWrap>
 
         <StyledButton type="submit">
-          {isLoading ? 'loading...' : 'Submit'}
+          {isPending ? 'loading...' : 'Submit'}
         </StyledButton>
-        {error && (
+        {isError && (
           <p className="text-red-500">
-            Error: {error?.response?.data?.message || 'Login failed'}
+            Error: {isError?.response?.data?.message || 'Login failed'}
           </p>
         )}
         <p className=" md:text-[0.9rem] md:w-[60%] w-[90%] flex flex-row text-start items-center gap-[5px]  text-[11px]">
