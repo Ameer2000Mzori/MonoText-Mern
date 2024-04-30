@@ -7,7 +7,6 @@ import { signupValidation } from '../../shared/validationSchema'
 import AuthOperations from '../../../api/AuthOperations'
 import { useDispatch } from 'react-redux'
 import { signIn } from '../../../features/user/userSlice'
-// import { useSignUp } from './hooks/SignupLogic'
 
 export default function Signup() {
   const dispatch = useDispatch()
@@ -19,8 +18,7 @@ export default function Signup() {
     confirmPassword: '',
   }
 
-  // const { signUp, isPending, error } = useSignUp()
-  const { mutate, isPending, isSuccess, isError, data } = AuthOperations({
+  const { mutate, isPending, isError } = AuthOperations({
     onSuccess: (newData) => {
       dispatch(signIn({ ...newData.data, token: newData.token }))
       setTimeout(() => navigate('/'), 500)

@@ -1,25 +1,20 @@
 import React, { useEffect, useState } from 'react'
-// import { Link } from 'react-router-dom'
 import AccountsLinks from './shared/LoginLinks'
 import { useSelector } from 'react-redux'
 import AuthOperations from '../../../api/AuthOperations'
 export default function Home() {
   const [data, setData] = useState([])
 
-  // onSuccess, onError
   const {
     mutate: mutateArticle,
     isPending: isPendingArticle,
-    onSuccess: isSuccessArticle,
-    onError: isErrorArticle,
     data: dataArticle,
   } = AuthOperations({ onSuccess: (newData) => setData(newData) })
 
   const {
     mutate: mutateRate,
     isPending: isPendingRate,
-    onSuccess: isSuccessRate,
-    onError: isErrorRate,
+
     data: dataRate,
   } = AuthOperations({
     onSuccess: () => mutateArticle([{ url: 'article', method: 'GET' }]),
@@ -27,8 +22,6 @@ export default function Home() {
   })
 
   const user = useSelector((state) => state.user)
-
-  // http://localhost:4000/article
 
   useEffect(() => {
     mutateArticle([{ url: 'article', method: 'GET' }])
@@ -48,19 +41,12 @@ export default function Home() {
     ])
   }
 
-  console.log(
-    'data after fetching',
-    dataArticle,
-    isPendingArticle,
-    isSuccessArticle,
-    isErrorArticle
-  )
+  console.log('data after fetching', dataArticle, isPendingArticle)
 
   console.log(
     'this data after rate click',
     isPendingRate,
-    isSuccessRate,
-    isErrorRate,
+
     dataRate
   )
 
