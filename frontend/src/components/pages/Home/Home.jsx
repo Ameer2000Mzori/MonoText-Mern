@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import AccountsLinks from './shared/LoginLinks'
 import { useSelector } from 'react-redux'
 import AuthOperations from '../../../api/AuthOperations'
+import NotificationCard from '../../shared/NotificationCard'
 export default function Home() {
   const [data, setData] = useState([])
 
@@ -9,7 +10,11 @@ export default function Home() {
     mutate: mutateArticle,
     isPending: isPendingArticle,
     data: dataArticle,
-  } = AuthOperations({ onSuccess: (newData) => setData(newData) })
+  } = AuthOperations({
+    onSuccess: (newData) => {
+      setData(newData)
+    },
+  })
 
   const {
     mutate: mutateRate,
@@ -18,7 +23,12 @@ export default function Home() {
     data: dataRate,
   } = AuthOperations({
     onSuccess: () => mutateArticle([{ url: 'article', method: 'GET' }]),
-    onError: () => console.log('there is error'),
+    onError: (error) => {
+      NotificationCard({
+        option: 'error',
+        text: `${error.response.statusText || 'an error occurred'}`,
+      })
+    },
   })
 
   const user = useSelector((state) => state.user)
