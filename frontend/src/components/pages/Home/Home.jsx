@@ -70,8 +70,8 @@ export default function Home() {
         {user.token ? <>{user.username}</> : <AccountsLinks />}
       </div>
       {/*  this is the mid and its for scroll */}
-      <div className="n w-[80%] h-[80%] lg:w-[50%] flex flex-col text-center items-center justify-center bg-sky-300 border-solid border-2 border-sky-500 ">
-        <div className="w-[100%] h-[100%] text-start items-center justify-center flex flex-col ">
+      <div className="n w-[80%] h-[80%] lg:w-[50%] flex flex-col text-center items-center justify-center  border-solid border-2 border-sky-500 ">
+        <div className="w-[100%] h-[100%] text-start items-center justify-start flex flex-col ">
           <Articles data={data} rate={rateThisArticle} />
         </div>
       </div>
