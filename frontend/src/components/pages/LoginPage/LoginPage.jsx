@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import ErrorMessage from './hooks/ErrorMessage.jsx'
 import { validationSchema } from '../../shared/validationSchema.js'
-// import { useLogin } from './hooks/LoginLogic.jsx'
 
 import {
   StyledFormWrap,
@@ -16,14 +15,16 @@ import AuthOperations from '../../../api/AuthOperations.jsx'
 import { useDispatch } from 'react-redux'
 import { signIn } from '../../../features/user/userSlice.js'
 
+import NotificationCard from '../../shared/NotificationCard.jsx'
+
 export default function LoginPage() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  // const { login, isPending, error } = useLogin()
   const { mutate, isPending, isError } = AuthOperations({
     onSuccess: (newData) => {
       dispatch(signIn({ ...newData.data, token: newData.token }))
       setTimeout(() => navigate('/'), 500)
+      NotificationCard({ arg: 'logged in successfully' })
     },
   })
   useEffect(() => {
