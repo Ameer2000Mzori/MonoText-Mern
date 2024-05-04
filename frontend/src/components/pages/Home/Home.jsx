@@ -3,6 +3,7 @@ import AccountsLinks from './shared/LoginLinks'
 import { useSelector } from 'react-redux'
 import AuthOperations from '../../../api/AuthOperations'
 import NotificationCard from '../../shared/NotificationCard'
+import Articles from './components/Articles'
 export default function Home() {
   const [data, setData] = useState([])
 
@@ -71,21 +72,7 @@ export default function Home() {
       {/*  this is the mid and its for scroll */}
       <div className="n w-[80%] h-[80%] lg:w-[50%] flex flex-col text-center items-center justify-center bg-sky-300 border-solid border-2 border-sky-500 ">
         <div className="w-[100%] h-[100%] text-start items-center justify-center flex flex-col ">
-          {data?.map((article) => {
-            return (
-              <div key={article._id} className="m-4">
-                <h1>{article.title}</h1>
-                <h1>{article.text}</h1>
-                <button onClick={() => rateThisArticle(article._id, 1)}>
-                  rate up
-                </button>
-                <button onClick={() => rateThisArticle(article._id, -1)}>
-                  rate down
-                </button>
-                <h1>{article.rates.reduce((a, b) => a + b.value, 0)}</h1>
-              </div>
-            )
-          })}
+          <Articles data={data} rate={rateThisArticle} />
         </div>
       </div>
       {/* this is right side and mosly will be used for sugustions accounts */}
