@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-
+import { ToastContainer } from 'react-toastify'
 import { store } from './store/store'
 import { Provider } from 'react-redux'
 
@@ -19,6 +19,7 @@ function App() {
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <Router>
+          <ToastContainer />
           <Navbar />
           <Routes>
             <Route path="*" element={<NotFound />} />
