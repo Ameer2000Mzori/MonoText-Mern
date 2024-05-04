@@ -24,7 +24,17 @@ export default function LoginPage() {
     onSuccess: (newData) => {
       dispatch(signIn({ ...newData.data, token: newData.token }))
       setTimeout(() => navigate('/'), 500)
-      NotificationCard({ arg: 'logged in successfully' })
+      NotificationCard({
+        option: 'success',
+        text: 'logged in successfully',
+      })
+    },
+    onError: (error) => {
+      console.log('error', error)
+      NotificationCard({
+        option: 'error',
+        text: `${error?.response?.data?.message}`,
+      })
     },
   })
   useEffect(() => {

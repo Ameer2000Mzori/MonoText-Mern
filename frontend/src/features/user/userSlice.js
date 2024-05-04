@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import NotificationCard from '../../components/shared/NotificationCard'
 
 const initialState = () =>
   localStorage.getItem('user')
@@ -24,6 +25,7 @@ export const userSlice = createSlice({
     },
     signOut: (state, action) => {
       localStorage.removeItem('user')
+      NotificationCard({ option: 'warning', text: 'logged out successfully' })
       return {
         username: null,
         email: null,
