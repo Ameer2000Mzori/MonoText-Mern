@@ -4,6 +4,9 @@ import { useSelector } from 'react-redux'
 import AuthOperations from '../../../api/AuthOperations'
 import NotificationCard from '../../shared/NotificationCard'
 import Articles from './components/Articles'
+import ArticleForm from './components/ArticleForm'
+
+import { AlignJustify } from 'lucide-react'
 export default function Home() {
   const [data, setData] = useState([])
 
@@ -70,8 +73,14 @@ export default function Home() {
         {user.token ? <>{user.username}</> : <AccountsLinks />}
       </div>
       {/*  this is the mid and its for scroll */}
-      <div className="n w-[80%] h-[80%] lg:w-[50%] flex flex-col text-center items-center justify-center  border-solid border-2 border-sky-500 ">
-        <div className="w-[100%] h-[100%] text-start items-center justify-start flex flex-col ">
+      <div className="n w-[80%] h-[80%] lg:w-[50%] flex flex-col text-center items-center justify-start  border-solid border-2 border-sky-500 ">
+        <div className="h-[250px] w-[100%]">
+          {user.token && <ArticleForm user={user} />}
+        </div>
+        <div>
+          <AlignJustify />
+        </div>
+        <div className="h-[70%] w-[100%] flex flex-col text-center items-center justify-start">
           <Articles data={data} rate={rateThisArticle} />
         </div>
       </div>
