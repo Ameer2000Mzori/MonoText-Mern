@@ -15,7 +15,7 @@ const Articles = ({ data, rate: rateThisArticle }) => {
         return (
           <div
             key={article._id}
-            className=" bg-slate-100 drop-shadow-lg rounded-[15px] relative m-4 w-[90%] h-[120px] flex flex-row text-start items-center justify-around"
+            className=" bg-slate-100 drop-shadow-lg rounded-[15px] relative m-3 w-[90%] h-[110px] flex flex-row text-start items-center justify-around"
           >
             <div className="flex flex-col text-center items-center justify-center gap-1">
               <button onClick={() => rateThisArticle(article._id, 1)}>
