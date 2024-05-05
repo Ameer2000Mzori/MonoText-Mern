@@ -74,12 +74,16 @@ export default function Home() {
       </div>
       {/*  this is the mid and its for scroll */}
       <div className="n w-[80%] h-[80%] lg:w-[50%] flex flex-col text-center items-center justify-start  border-solid border-2 border-sky-500 ">
-        <div className="h-[250px] w-[100%]">
-          {user.token && <ArticleForm user={user} />}
-        </div>
-        <div>
-          <AlignJustify />
-        </div>
+        {user.token && (
+          <>
+            <div className="h-[250px] w-[100%]">
+              {user.token && <ArticleForm user={user} />}
+            </div>
+            <div>
+              <AlignJustify />
+            </div>
+          </>
+        )}
         <div className="h-[70%] w-[100%] flex flex-col text-center items-center justify-start">
           <Articles data={data} rate={rateThisArticle} />
         </div>
