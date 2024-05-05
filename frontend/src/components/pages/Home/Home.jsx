@@ -67,13 +67,13 @@ export default function Home() {
   console.log(data)
 
   return (
-    <div className=" overflow-y-auto h-[100vh] w-[100vw] flex flex-row text-center items-center justify-center gap-4">
+    <div className=" overflow-y-auto  h-[100vh] w-[100vw] flex flex-row text-center items-center justify-center gap-4">
       {/* this is left side  */}
-      <div className="w-[15%] h-[80%] lg:flex hidden flex-col text-center items-center justify-center border-solid border-2">
+      <div className="w-[15%] h-[80%] left-[8%] fixed lg:flex hidden flex-col text-center items-center justify-center border-solid border-2">
         {user.token ? <>{user.username}</> : <AccountsLinks />}
       </div>
       {/*  this is the mid and its for scroll */}
-      <div className=" w-[80%] h-[80%] lg:w-[50%] flex flex-col text-center items-center justify-start  border-solid border-2 border-sky-500 ">
+      <div className=" w-[80%] h-[80%] gap-4 lg:w-[50%] flex flex-col text-center items-center justify-start  border-solid border-2 border-sky-500 ">
         {user.token && (
           <>
             <div className="h-[250px] w-[100%]">
@@ -91,7 +91,7 @@ export default function Home() {
         </div>
       </div>
       {/* this is right side and mosly will be used for sugustions accounts */}
-      <div className="w-[15%] h-[80%]  lg:flex hidden flex-col text-center items-center justify-center bg-sky-300 border-solid border-2 border-sky-500 ">
+      <div className="w-[15%] h-[80%] fixed right-[8%] lg:flex hidden flex-col text-center items-center justify-center bg-sky-300 border-solid border-2 border-sky-500 ">
         <h1>this is Right side</h1>
         <h1>10% / 80%</h1>
       </div>
