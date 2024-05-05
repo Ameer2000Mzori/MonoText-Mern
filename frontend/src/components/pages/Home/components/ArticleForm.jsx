@@ -47,7 +47,7 @@ const ArticleForm = ({ user, mutateArticle }) => {
               value={articleTitle}
               onChange={(e) => setArticleTitle(e.target.value)}
               type="text"
-              className=" resize-none bg-slate-100 active:outline-slate-300 focus:outline-slate-300 rounded-[5px] border-[2px]"
+              className=" pl-2 resize-none bg-slate-100 active:outline-slate-300 focus:outline-slate-300 rounded-[5px] border-[2px]"
               placeholder="title of article"
             ></input>
             <textarea
