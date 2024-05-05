@@ -7,6 +7,7 @@ import { signupValidation } from '../../shared/validationSchema'
 import AuthOperations from '../../../api/AuthOperations'
 import { useDispatch } from 'react-redux'
 import { signIn } from '../../../features/user/userSlice'
+import NotificationCard from '../../shared/NotificationCard'
 
 export default function Signup() {
   const dispatch = useDispatch()
@@ -22,6 +23,14 @@ export default function Signup() {
     onSuccess: (newData) => {
       dispatch(signIn({ ...newData.data, token: newData.token }))
       setTimeout(() => navigate('/'), 500)
+      NotificationCard({
+        option: 'success',
+        text: 'created account successfully',
+      })
+    },
+    onError: (error) => {
+      console.error('There was an error:', error)
+      NotificationCard({ option: 'error', text: 'there was an error' })
     },
   })
 
