@@ -26,10 +26,10 @@ const Articles = ({ data, rate: rateThisArticle }) => {
                 <MoveDown size={20} />
               </button>
             </div>
-            <div className="w-[80%]">
+            <div className="w-[80%] h-[100%] flex flex-col gap-2 ">
               <h1>{article.author.username}</h1>
-              <h1>{article.title}</h1>
-              <h1 className="text-[12px]">{article.text}</h1>
+              <h1 className="font-bold text-[15px]">{article.title}</h1>
+              <h1 className="text-[15px]">{article.text}</h1>
             </div>
           </div>
         )
