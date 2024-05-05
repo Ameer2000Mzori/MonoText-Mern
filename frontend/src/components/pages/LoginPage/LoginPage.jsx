@@ -1,62 +1,114 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useLogin } from './hooks/LoginLogic.jsx' // Ensure this path matches the location of your LoginLogic custom hook file
+import React, { useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useFormik } from 'formik'
+import ErrorMessage from './hooks/ErrorMessage.jsx'
+import { validationSchema } from '../../shared/validationSchema.js'
+
+import {
+  StyledFormWrap,
+  StyledLabel,
+  StyledInput,
+  StyledButton,
+  StyledInputsWrap,
+} from './hooks/StyledComponents.jsx'
+import AuthOperations from '../../../api/AuthOperations.jsx'
+import { useDispatch } from 'react-redux'
+import { signIn } from '../../../features/user/userSlice.js'
+
+import NotificationCard from '../../shared/NotificationCard.jsx'
 
 export default function LoginPage() {
-  const [userEmail, setUserEmail] = useState('')
-  const [userPassword, setUserPassword] = useState('')
-
-  // Destructure the login function from the useLogin hook
-  const { login, isError, error } = useLogin()
-
-  // Log errors for debugging purposes
-  console.log('isError', isError)
-  console.log('error', error && error.message)
-
-  // Define the submit handler
-  const handleSubmit = () => {
-    login({ email: userEmail, password: userPassword }) // Call the login function with an object containing email and password
-  }
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { mutate, isPending, isError } = AuthOperations({
+    onSuccess: (newData) => {
+      dispatch(signIn({ ...newData.data, token: newData.token }))
+      setTimeout(() => navigate('/'), 500)
+      NotificationCard({
+        option: 'success',
+        text: 'logged in successfully',
+      })
+    },
+    onError: (error) => {
+      console.log('error', error)
+      NotificationCard({
+        option: 'error',
+        text: `${error?.response?.data?.message}`,
+      })
+    },
+  })
+  useEffect(() => {
+    console.log(isPending)
+  }, [isPending])
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      console.log(values)
+      mutate([
+        {
+          method: 'POST',
+          url: 'login',
+          email: values.email,
+          password: values.password,
+        },
+      ])
+    },
+  })
 
   return (
     <div className="w-[100vw] h-[100vh] flex flex-col justify-center text-center items-center bg-zinc-600">
-      <div className="grid grid-row-6 gap-2 sm:w-[500px] w-[360px] h-[300px] bg-zinc-500 p-4 text-start rounded-md text-white">
-        <div>Email</div>
-        <input
-          className="h-[30px] text-black pl-2"
-          type="email"
-          placeholder="email"
-          value={userEmail}
-          onChange={(e) => setUserEmail(e.target.value)}
-        />
-        <div>Password</div>
-        <input
-          className="h-[30px] text-black pl-2"
-          type="password"
-          placeholder="password"
-          value={userPassword}
-          onChange={(e) => setUserPassword(e.target.value)}
-        />
-        <button
-          className="bg-sky-900 hover:bg-sky-800 active:bg-sky-700"
-          type="button"
-          onClick={handleSubmit} // Use the handleSubmit function here
-        >
-          Submit
-        </button>
+      <StyledFormWrap onSubmit={formik.handleSubmit}>
+        <StyledInputsWrap>
+          <StyledLabel>Email</StyledLabel>
+          <StyledInput
+            id="email"
+            name="email"
+            type="email"
+            placeholder="email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.email && formik.errors.email ? (
+            <ErrorMessage>{formik.errors.email}</ErrorMessage>
+          ) : null}
+        </StyledInputsWrap>
+        <StyledInputsWrap>
+          <StyledLabel>Password</StyledLabel>
+          <StyledInput
+            id="password"
+            name="password"
+            type="password"
+            placeholder="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+          />
+          {formik.touched.password && formik.errors.password ? (
+            <ErrorMessage children={formik.errors.password} />
+          ) : null}
+        </StyledInputsWrap>
+
+        <StyledButton type="submit">
+          {isPending ? 'loading...' : 'Submit'}
+        </StyledButton>
         {isError && (
           <p className="text-red-500">
-            Error: {error?.response?.data?.message || 'Login failed'}
+            Error: {isError?.response?.data?.message || 'Login failed'}
           </p>
         )}
-        <p className="text-[0.9rem]">
+        <p className=" md:text-[0.9rem] md:w-[60%] w-[90%] flex flex-row text-start items-center gap-[5px]  text-[11px]">
           <b>New here?</b>
           <Link className="underline text-sky-500" to="/signup">
             Sign up now
           </Link>
           to get started!
         </p>
-      </div>
+      </StyledFormWrap>
     </div>
   )
 }
